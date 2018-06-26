@@ -44,7 +44,6 @@ def data_reshape(diretory='./paipai/'):
     col_name_wv = ['label', 'words_x', 'words_y']
     concat = lambda data: pd.concat((data, data.rename(columns={'words_y': 'words_x', 'words_x': 'words_y'}))).sample(frac=1)
     train_data = concat(train_data[col_name_wv])
-    test_data = concat(test_data[col_name_wv[1:]])
     
 #     # 基于字向量
 # print('基于词向量 ...')
@@ -148,7 +147,6 @@ class KerasEmbedding(object):
         return embedding_layer
 
     def gensim_load_wv(self):
-        """大写会变成小写"""
         try:
             import gensim
             print('Load Word Vectors ...')
@@ -175,6 +173,7 @@ bow_y = kb.transform(train.words_y)
 
 ke = KerasEmbedding('./paipai/word_embed.txt', kb.maxlen, kb.tokenizer.word_index)
 embedding_layer = ke.get_keras_embedding()
+
 
 import keras
 from keras.layers import Input, LSTM, GRU, Embedding, Dropout, Dense, BatchNormalization
