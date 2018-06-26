@@ -1,11 +1,8 @@
+import os
 import gensim
+import pickle
 import numpy as np
 import pandas as pd
-from tqdm import tqdm, tqdm_notebook
-tqdm.pandas('...')
-
-import pickle
-
 
 class Pickle(object):
     """
@@ -29,27 +26,50 @@ class Pickle(object):
         with open(file, 'rb') as f:
             return pickle.load(f)
         
-def data_reshape():
-    train = pd.read_csv('./paipai/train.csv')
-    test = pd.read_csv('./paipai/test.csv')
-    q = pd.read_csv('./paipai/question.csv')
-    func = lambda data: data.merge(q.rename(columns={'qid': 'q1'}), 'left', 'q1').merge(q.rename(columns={'qid': 'q2'}), 'left', 'q2')
-    train_data = func(train)
-    test_data = func(test)
+def data_reshape(diretory='./paipai/'):
+    get_path = lambda p: os.path.abspath(os.path.join(diretory, p))
     
-    # 基于词向量
-    col_name_wv = ['label', 'words_x', 'words_y']
-    func = lambda data: pd.concat((data, data.rename(columns={'words_y': 'words_x', 'words_x': 'words_y'}))).sample(frac=1)
-    train_data = func(train_data[col_name_wv])
-    test_data = func(test_data[col_name_wv[1:]])
+    print('Load Raw Data ...')
+    train = pd.read_csv(func('train.csv'))
+    test = pd.read_csv(func('test.csv'))
+    question = pd.read_csv(func('question.csv'))
     
-    # 基于字向量
-    col_name_cv = ['label', 'chars_x', 'chars_y']
-    func = lambda data: pd.concat((data, data.rename(columns={'chars_y': 'chars_x', 'chars_x': 'chars_y'}))).sample(frac=1)
-    train_data = func(train_data[col_name_cv])
-    test_data = func(test_data[col_name_cv[1:]])
-    
+    print('Merge Raw Data ...')
+    merge = lambda data: data.merge(question.rename(columns={'qid': 'q1'}), 'left', 'q1').merge(question.rename(columns={'qid': 'q2'}), 'left', 'q2')
+    train_data = merge(train)
+    test_data = merge(test)
 
+    # 基于词向量
+    print('基于词向量 ...')
+    col_name_wv = ['label', 'words_x', 'words_y']
+    concat = lambda data: pd.concat((data, data.rename(columns={'words_y': 'words_x', 'words_x': 'words_y'}))).sample(frac=1)
+    train_data = concat(train_data[col_name_wv])
+    test_data = concat(test_data[col_name_wv[1:]])
+    
+#     # 基于字向量
+# print('基于词向量 ...')
+#     col_name_cv = ['label', 'chars_x', 'chars_y']
+#     func = lambda data: pd.concat((data, data.rename(columns={'chars_y': 'chars_x', 'chars_x': 'chars_y'}))).sample(frac=1)
+#     train_data = func(train_data[col_name_cv])
+#     test_data = func(test_data[col_name_cv[1:]])
+
+    print('Pickle ...')
+    Pickle().serialize(train_data, get_path('train.pickle'))
+    Pickle().serialize(test_data, get_path('test.pickle'))
+    return train_data, test_data, question
+
+def data_prep(diretory='./paipai/'):
+    get_path = lambda p: os.path.abspath(os.path.join(diretory, p))
+    train_path, test_path = get_path('train.pickle'), get_path('test.pickle')
+    if os.path.isfile(train_path) and os.path.isfile(test_path):
+        train = Pickle().deserialize(train_path)
+        test = Pickle().deserialize(test_path)
+        question = pd.read_csv(get_path('question.csv'))
+        return train, test, question
+    else:
+        return data_reshape(diretory)
+
+train, test, question = data_prep()
 
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
@@ -92,8 +112,7 @@ class KerasBow(object):
     def fit_transform(self, docs):
         self.fit(docs)
         return self.transform(docs)
-    
-import numpy as np
+
 from keras.layers import Embedding
 
 
@@ -148,16 +167,14 @@ class KerasEmbedding(object):
                     embeddings_index[line[0]] = np.asarray(line[1:], dtype='float32')
         return embeddings_index, len(line[1:])
 
+############################################
 kb = KerasBow(20000)
-kb.fit(q.words)
-bow_x = kb.transform(data_ws.words_x)
-bow_y = kb.transform(data_ws.words_y)
+kb.fit(question.words)
+bow_x = kb.transform(train.words_x)
+bow_y = kb.transform(train.words_y)
 
 ke = KerasEmbedding('./paipai/word_embed.txt', kb.maxlen, kb.tokenizer.word_index)
 embedding_layer = ke.get_keras_embedding()
-
-
-
 
 import keras
 from keras.layers import Input, LSTM, GRU, Embedding, Dropout, Dense, BatchNormalization
@@ -186,10 +203,10 @@ predictions = Dense(1, activation='sigmoid')(merged_vector)
 # We define a trainable model linking the
 # tweet inputs to the predictions
 model = Model(inputs=[input_1, input_2], outputs=predictions)
-model.summary()
 
 model.compile(optimizer=Adam(),
               loss='binary_crossentropy',
               metrics=['acc'])
 
-model.fit([bow_x, bow_y], data_ws.label.values.reshape(-1, 1), batch_size=1280, epochs=25, validation_split=0.25)
+model.fit([bow_x, bow_y], train.label.values.reshape(-1, 1), batch_size=1280, epochs=20, validation_split=0.25)
+
