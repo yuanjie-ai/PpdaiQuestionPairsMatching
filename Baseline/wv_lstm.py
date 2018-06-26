@@ -30,9 +30,9 @@ def data_reshape(diretory='./paipai/'):
     get_path = lambda p: os.path.abspath(os.path.join(diretory, p))
     
     print('Load Raw Data ...')
-    train = pd.read_csv(func('train.csv'))
-    test = pd.read_csv(func('test.csv'))
-    question = pd.read_csv(func('question.csv'))
+    train = pd.read_csv(get_path('train.csv'))
+    test = pd.read_csv(get_path('test.csv'))
+    question = pd.read_csv(get_path('question.csv'))
     
     print('Merge Raw Data ...')
     merge = lambda data: data.merge(question.rename(columns={'qid': 'q1'}), 'left', 'q1').merge(question.rename(columns={'qid': 'q2'}), 'left', 'q2')
