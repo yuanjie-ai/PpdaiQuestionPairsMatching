@@ -25,7 +25,7 @@ shared_lstm = LSTM(128)
 left_output = shared_lstm(encoded_left)
 right_output = shared_lstm(encoded_right)
 
-dist = Lambda(lambda x: manhattan(*x), output_shape = lambda x: (x[0][0], 1))([left_output, right_output]) 
+dist = Lambda(lambda x: manhattan(*x), output_shape = lambda x: (x[0][0], 1))([left_output, right_output])  # lambda x: (None, 1)
 
 # model
 model = Model([left_input, right_input], [dist])
