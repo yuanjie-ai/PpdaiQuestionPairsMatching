@@ -209,3 +209,5 @@ model.compile(optimizer=Adam(),
 
 model.fit([bow_x, bow_y], train.label.values.reshape(-1, 1), batch_size=1280, epochs=20, validation_split=0.25)
 
+res = model.predict([_x, _y], 1280, 1)
+pd.DataFrame(res, columns=['y_pre']).to_csv('res.csv', index=False)
