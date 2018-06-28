@@ -39,7 +39,7 @@
   - wmd
   - norm_wmd(l2): norm_model.init_sims(replace=True)
   - skew/kurtosis: `from scipy.stats import skew, kurtosis`
-  - scipy.spatial.distance: `from scipy.spatial.distance import cosine, cityblock, jaccard, canberra, euclidean, minkowski, braycurtis`
+  - scipy.spatial.distance: `import braycurtis, canberra, cityblock, cosine, euclidean, jaccard, minkowski`
   
 - lda
 
