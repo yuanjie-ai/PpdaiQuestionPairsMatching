@@ -7,7 +7,6 @@
 
 ---
 ## 2. 特征工程
-> qq匹配
 - bleu（机器翻译指标）：对两个句子的共现词频率计算
 - n-grams
 
@@ -18,22 +17,29 @@
 - words(chars): 针对字符串计算
   - 词数/重叠词数（去重）
   - 相同度（相异度 = 1 - 相同度）: com / (q1 + q2 - com)每个状态分量根据目标设置最优权重
-  - 编辑距离
-    - fuzz_qratio
-    - fuzz_partial_ratio
-    - fuzz_token_set_ratio
-    - fuzz_token_sort_ratio
-    - fuzz_partial_token_sort_ratio
   - 杰卡顿
   - simhash
   - 对目标影响大的词（lstm状态差等）
+  - 编辑距离
+    - fuzz.QRatio
+    - fuzz.WRatio
+    - fuzz.partial_ratio
+    - fuzz.token_set_ratio
+    - fuzz.token_sort_ratio
+    - fuzz.partial_token_set_ratio
+    - fuzz.partial_token_sort_ratio
+    - ...
   
 - tfidf(tf): 针对数值计算
   - cosine（修正）
   - 欧式距离
   - 雅克比
+
+- WordVectors:
   - wmd
-  
+  - norm_wmd
+  - cosine
+
 - lda
 
 
