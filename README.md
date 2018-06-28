@@ -37,7 +37,7 @@
 
 - WordVectors:
   - wmd
-  - norm_wmd
+  - norm_wmd(l2): norm_model.init_sims(replace=True)
   - cosine
 
 - lda
