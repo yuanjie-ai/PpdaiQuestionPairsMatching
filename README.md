@@ -7,8 +7,6 @@
 
 ---
 ## 2. 特征工程
-- bleu（机器翻译指标）：对两个句子的共现词频率计算`torchtext`
-- n-grams
 
 - question(leak): 
   - tf: q1/q2/q1+q2
@@ -33,6 +31,7 @@
 
   
 - [doc2num][3]: 针对tf/tfidf/wordVectors等计算
+  - n-grams: 结合tf/tfidf使用
   - gensim
     - wmd
     - norm_wmd(l2): norm_model.init_sims(replace=True)
@@ -41,7 +40,7 @@
   - cosine（修正）
 
 - lda
-
+- bleu（机器翻译指标）：对两个句子的共现词频率计算`torchtext`
 
 
 
