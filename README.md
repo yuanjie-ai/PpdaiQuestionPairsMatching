@@ -20,6 +20,7 @@ https://www.kaggle.com/rethfro/1d-cnn-single-model-score-0-14-0-16-or-0-23
   - 重叠词数：`len(set(q1) & set(q2))`
   - 相同度（相异度 = 1 - 相同度）: com / (q1 + q2 - com)每个状态分量根据目标设置最优权重
   - simhash
+  - jaccard: `jaccard = lambda a, b: len(set(a).intersection(b))/(len(set(a).union(b))+0.)`
   - 对目标影响大的词（lstm状态差等）
   - 编辑距离
     - fuzz.QRatio
