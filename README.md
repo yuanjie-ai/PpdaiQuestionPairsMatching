@@ -29,18 +29,15 @@
     - fuzz.partial_token_set_ratio
     - fuzz.partial_token_sort_ratio
     - ...
-  
-- tfidf(tf): 针对数值计算
-  - cosine（修正）
-  - 欧式距离
-  - 雅克比
 
-- [docVector][3]:
+  
+- [doc2num(tf/tfidf/word2vec...)][3]: 针对数值计算
   - wmd
   - norm_wmd(l2): norm_model.init_sims(replace=True)
   - skew/kurtosis: `from scipy.stats import skew, kurtosis`
   - scipy.spatial.distance: `import braycurtis, canberra, cityblock, cosine, euclidean, jaccard, minkowski`
-  
+  - cosine（修正）
+
 - lda
 
 
