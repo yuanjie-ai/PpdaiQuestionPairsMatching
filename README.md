@@ -7,7 +7,7 @@
 
 ---
 ## 2. 特征工程
-- bleu（机器翻译指标）：对两个句子的共现词频率计算
+- bleu（机器翻译指标）：对两个句子的共现词频率计算`torchtext`
 - n-grams
 
 - question(leak): 
