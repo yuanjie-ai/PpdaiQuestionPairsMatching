@@ -5,6 +5,8 @@
 - LSTM
 - CNN
 
+https://www.kaggle.com/rethfro/1d-cnn-single-model-score-0-14-0-16-or-0-23
+
 ---
 ## 2. 特征工程
 
