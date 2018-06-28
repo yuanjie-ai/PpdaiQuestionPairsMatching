@@ -33,8 +33,9 @@
 
   
 - [doc2num(tf/tfidf/word2vec...)][3]: 针对数值计算
-  - wmd
-  - norm_wmd(l2): norm_model.init_sims(replace=True)
+  - gensim
+    - wmd
+    - norm_wmd(l2): norm_model.init_sims(replace=True)
   - skew/kurtosis: `from scipy.stats import skew, kurtosis`
   - scipy.spatial.distance: `import braycurtis, canberra, cityblock, cosine, euclidean, jaccard, minkowski`
   - cosine（修正）
