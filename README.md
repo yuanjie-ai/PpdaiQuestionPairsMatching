@@ -35,7 +35,7 @@
   - 欧式距离
   - 雅克比
 
-- docVector:
+- [docVector][3]:
   - wmd
   - norm_wmd(l2): norm_model.init_sims(replace=True)
   - skew/kurtosis: `from scipy.stats import skew, kurtosis`
@@ -49,3 +49,4 @@
 ---
 [1]: https://ai.ppdai.com/mirror/goToMirrorDetail?mirrorId=1
 [2]: https://github.com/Jie-Yuan/PpdaiQuestionPairsMatching/tree/master/Baseline
+[3]: https://www.kaggle.com/kardopaska/fast-how-to-abhishek-s-features-w-o-cray-xk7
