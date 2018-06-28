@@ -1,5 +1,6 @@
 http://www.mit.edu/~jonasm/info/MuellerThyagarajan_AAAI16.pdf
 
+https://www.cnblogs.com/txq157/p/7425781.html
 ```python
 #相似度计算
 l1 = lambda x: K.sum(K.abs(x), axis=-1, keepdims=True)
