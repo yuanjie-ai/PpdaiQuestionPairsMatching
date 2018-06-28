@@ -35,11 +35,12 @@
   - 欧式距离
   - 雅克比
 
-- WordVectors:
+- docVector:
   - wmd
   - norm_wmd(l2): norm_model.init_sims(replace=True)
-  - cosine
-
+  - skew/kurtosis: `from scipy.stats import skew, kurtosis`
+  - scipy.spatial.distance: `from scipy.spatial.distance import cosine, cityblock, jaccard, canberra, euclidean, minkowski, braycurtis`
+  
 - lda
 
 
