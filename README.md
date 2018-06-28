@@ -31,7 +31,7 @@
 
   
 - [doc2num][3]: 针对tf/tfidf/wordVectors等计算
-  - n-grams: 结合tf/tfidf使用
+  - n-grams: 结合tf/tfidf使用(tfidf_wm/tfidf_l2等)
   - gensim
     - wmd
     - norm_wmd(l2): norm_model.init_sims(replace=True)
