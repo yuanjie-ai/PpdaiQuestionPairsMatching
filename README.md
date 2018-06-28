@@ -32,7 +32,7 @@
     - ...
 
   
-- [doc2num(tf/tfidf/wordVectors)][3]: 针对数值计算
+- [doc2num][3]: 针对tf/tfidf/wordVectors等计算
   - gensim
     - wmd
     - norm_wmd(l2): norm_model.init_sims(replace=True)
